@@ -1,0 +1,1 @@
+"Which five performers born before 1970 have the most appearances in Horror or Thriller movies rated below 5.0? Return each performer's person catalog ID, name, matching movie count, and average rating rounded to 2 decimals; order by movie count descending, then average rating descending, then name ascending."

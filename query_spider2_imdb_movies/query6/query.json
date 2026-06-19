@@ -1,0 +1,1 @@
+"Which directors have at least one directed movie in each official release year 2017, 2018, and 2019, with their average movie rating strictly increasing from 2017 to 2018 to 2019? Return each director's person catalog ID, name, the three yearly average ratings rounded to 2 decimals, and the directed movie count for each year."

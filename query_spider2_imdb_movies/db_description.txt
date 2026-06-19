@@ -1,0 +1,43 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. imdb_catalog_database
+   - This database is stored in PostgreSQL and contains catalog-style movie and person profile information for an IMDB movie slice.
+   - This database consists of two tables:
+     - movie_cards
+       - Each row describes a movie title and compact release profile.
+       - Fields:
+         - catalog_movie_key (text): Catalog-side movie identifier.
+         - title (text): Movie title.
+         - runtime_minutes (integer): Movie duration in minutes.
+         - release_profile (text): Semi-structured release details, including official year, publication date, country label, language list, and production company.
+     - person_cards
+       - Each row describes a person profile for actors, actresses, and directors.
+       - Fields:
+         - catalog_person_key (text): Catalog-side person identifier.
+         - display_name (text): Person name.
+         - profile_note (text): Semi-structured person details, including birth date, height, and known-for movie references.
+
+2. imdb_facts_database
+   - This database is stored in DuckDB and contains analytical movie facts, genre tags, and credit links.
+   - This database consists of three tables:
+     - movie_metrics
+       - Each row stores rating, vote, median rating, and worldwide gross information for a movie.
+       - Fields:
+         - movie_metric_key (text): Facts-side movie identifier.
+         - avg_rating (double): Average movie rating.
+         - total_votes (integer): Number of rating votes.
+         - median_rating (double): Median movie rating.
+         - gross_income_note (text): Semi-structured worldwide gross income note.
+     - genre_labels
+       - Each row assigns one genre label to one movie.
+       - Fields:
+         - movie_genre_key (text): Facts-side movie identifier.
+         - genre (text): Genre label.
+     - crew_credits
+       - Each row links one person to one movie credit category.
+       - Fields:
+         - movie_credit_key (text): Facts-side movie identifier.
+         - person_credit_key (text): Facts-side person identifier.
+         - credit_category (text): Credit category, such as director, actor, or actress.

@@ -1,0 +1,1 @@
+"Distribute all unique city pairs into distance ranges 0-999, 1000-1999, 2000-2999, 3000-3999, 4000-4999, 5000-5999, and 6000+, based on the average Haversine distance of all flights between the two cities. Which range has the fewest unique city pairs? Return the range and the pair count."

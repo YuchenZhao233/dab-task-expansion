@@ -1,0 +1,8 @@
+HINTS:
+- Movie and person identifiers use different wrappers across the catalog and facts databases. The shared numeric core is the stable part to normalize when matching records.
+- In release_profile, "Official year" is the movie's official release year. The "published_on" date is the calendar publication date and may be needed separately for month or quarter filters.
+- Treat country_label as an exact label unless a query explicitly asks to split countries.
+- Language filters are token based inside the languages list. "English-language" means English appears as one language token; "non-English" means English does not appear as a token.
+- Worldwide gross appears inside gross_income_note as a currency-like text value. Use the numeric amount for gross comparisons and sums.
+- Known-for movie references in profile_note use the same movie numeric core as other movie identifiers, but with a different wrapper.
+- When a query asks for rounded ratings, round only the final reported metric to the requested number of decimals.

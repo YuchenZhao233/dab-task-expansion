@@ -1,0 +1,1 @@
+"For each official release year, among exact country labels with at least 10 movies that each received at least 20,000 votes, which country label has the highest average rating? Return the year, country label, movie count, average rating rounded to 2 decimals, and total votes, ordered by year."

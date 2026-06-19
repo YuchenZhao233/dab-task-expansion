@@ -23,6 +23,18 @@ query_<dataset>/
 
 The `query_dataset/` directory contains the visible databases used by agents. Query folders contain the natural-language task, expected answer data, and a deterministic validation script.
 
+## Dataset Query Counts
+
+| Dataset | Query count |
+| --- | ---: |
+| `query_dabstep_payments` | 6 |
+| `query_spider2_IPL` | 10 |
+| `query_spider2_airlines` | 7 |
+| `query_spider2_california_traffic` | 8 |
+| `query_spider2_imdb_movies` | 8 |
+| `query_spider2_music` | 5 |
+| **Total** | **44** |
+
 ## What Is Not Included
 
 This repository does not provide a standalone runner.

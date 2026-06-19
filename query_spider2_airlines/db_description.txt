@@ -1,0 +1,52 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. airline_facts_database
+   - This database is stored in DuckDB and contains flight, fare-coupon, and booking-link facts for airline operations.
+   - This database consists of three tables:
+     - flight_events
+       - This table contains one row per scheduled flight event, including route endpoints, aircraft marker, status, and schedule information.
+       - Fields:
+         - route_flight_token (str): Reformatted flight-event identifier.
+         - flight_no (str): Published flight number.
+         - scheduled_departure (str): Scheduled departure timestamp.
+         - scheduled_arrival (str): Scheduled arrival timestamp.
+         - origin_marker (str): Reformatted departure-airport marker.
+         - destination_marker (str): Reformatted arrival-airport marker.
+         - status (str): Flight status such as Arrived, Scheduled, Cancelled, or Delayed.
+         - aircraft_marker (str): Reformatted aircraft marker.
+         - actual_departure (str): Actual departure timestamp when available.
+         - actual_arrival (str): Actual arrival timestamp when available.
+
+     - fare_coupons
+       - This table contains one row per ticket coupon for a flight, including ticket number, flight reference, fare condition, and fare amount.
+       - Fields:
+         - coupon_key (str): Obfuscated coupon identifier.
+         - ticket_no (str): Ticket number.
+         - flight_ref (str): Reformatted flight reference on fare records.
+         - fare_conditions (str): Fare class such as Economy, Comfort, or Business.
+         - amount (int): Fare amount.
+
+     - ticket_booking_links
+       - This table contains one row per ticket linked to its booking and booking timestamp.
+       - Fields:
+         - ticket_no (str): Ticket number.
+         - booking_key (str): Reformatted booking identifier.
+         - book_date (str): Booking timestamp.
+         - total_amount (int): Total booking amount.
+
+2. airline_reference_database
+   - This database is stored in SQLite and contains airport and aircraft reference profiles. Several lookup values are embedded in profile text rather than separate columns.
+   - This database consists of two tables:
+     - airport_profiles
+       - This table contains one row per airport, with a reformatted airport reference and a text profile containing the airport name, city, coordinates, and timezone.
+       - Fields:
+         - airport_ref (str): Reformatted airport identifier.
+         - profile_note (str): Text profile containing airport name, served city, longitude, latitude, and timezone.
+
+     - aircraft_profiles
+       - This table contains one row per aircraft type, with a reformatted aircraft reference and a text profile containing model and maximum range.
+       - Fields:
+         - aircraft_ref (str): Reformatted aircraft identifier.
+         - profile_note (str): Text profile containing aircraft model and maximum range in kilometers.

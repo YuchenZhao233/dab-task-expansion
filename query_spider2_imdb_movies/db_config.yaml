@@ -1,0 +1,9 @@
+db_clients:
+  imdb_catalog_database:
+    db_type: postgres
+    db_name: spider2_imdb_movies_catalog
+    sql_file: query_dataset/imdb_catalog.sql
+
+  imdb_facts_database:
+    db_type: duckdb
+    db_path: query_dataset/imdb_facts.duckdb

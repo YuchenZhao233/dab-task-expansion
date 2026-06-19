@@ -1,0 +1,7 @@
+db_clients:
+  airline_facts_database:
+    db_type: duckdb
+    db_path: query_dataset/airline_facts.duckdb
+  airline_reference_database:
+    db_type: sqlite
+    db_path: query_dataset/airline_reference.sqlite

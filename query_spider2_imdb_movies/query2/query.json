@@ -1,0 +1,1 @@
+"Determine the three genres with the most movies rated above 8.0. Within movies belonging to any of those three genres, list the four directors who directed the most above-8.0 movies. Return the genre set used plus each director's person catalog ID, name, and movie count; order directors by count descending and then name ascending."

@@ -1,0 +1,1 @@
+"Among English-language movies officially released in 2018, which five directors accumulated the most total votes across movies they directed? Consider only directors with at least two such movies. Return each director's person catalog ID, name, movie count, average rating rounded to 2 decimals, total votes, and total duration in minutes; order by total votes descending."

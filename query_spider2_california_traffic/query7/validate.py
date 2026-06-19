@@ -7,6 +7,8 @@ NUMBER_RE = re.compile(r"(?<![A-Za-z])[-+]?\d[\d,]*(?:\.\d+)?")
 
 
 def _normalize_text(value: str) -> str:
+    value = value.replace("–", "-").replace("—", "-").replace("−", "-")
+    value = re.sub(r"\s*-\s*", "-", value)
     return re.sub(r"\s+", " ", value.strip().lower())
 
 
@@ -35,6 +37,16 @@ def _segments(text: str) -> list[str]:
     return pieces
 
 
+def _numbers_in(text: str) -> list[float]:
+    numbers = []
+    for raw in NUMBER_RE.findall(text):
+        try:
+            numbers.append(float(raw.replace(",", "")))
+        except ValueError:
+            pass
+    return numbers
+
+
 def _row_matches(output: str, row: dict[str, str]) -> tuple[bool, str]:
     text_values = []
     number_values = []
@@ -54,18 +66,23 @@ def _row_matches(output: str, row: dict[str, str]) -> tuple[bool, str]:
 
     if text_values and number_values:
         normalized_text_values = [_normalize_text(value) for value in text_values]
-        for segment in _segments(output):
+        segments = _segments(output)
+        for index, segment in enumerate(segments):
             normalized_segment = _normalize_text(segment)
-            if all(value in normalized_segment for value in normalized_text_values) and all(
-                _contains_number(segment, number)
-                for number in number_values
-            ):
-                return True, "Found expected row values in the same answer segment."
-        return (
-            False,
-            "Expected text value(s) were present, but the expected numeric value(s) "
-            "were not associated with them in the same line or sentence.",
-        )
+            if not all(value in normalized_segment for value in normalized_text_values):
+                continue
+
+            segment_numbers = _numbers_in(segment)
+            if segment_numbers:
+                if all(_contains_number(segment, number) for number in number_values):
+                    return True, "Found expected row values in the same answer segment."
+                return False, "Found expected text value(s), but nearby numeric value(s) conflict with ground truth."
+
+            window = " ".join(segments[index : index + 3])
+            if all(_contains_number(window, number) for number in number_values):
+                return True, "Found expected row values in nearby answer segments."
+
+        return False, "Expected text and numeric values were not associated closely enough."
 
     missing_numbers = [
         str(number).rstrip("0").rstrip(".") if number % 1 else str(int(number))

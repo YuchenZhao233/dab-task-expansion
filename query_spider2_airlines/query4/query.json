@@ -1,0 +1,1 @@
+"For arrived flights whose departure and arrival airports are in different timezones, which departure city generated the most Business fare revenue? Return the departure city and total revenue rounded to two decimals."

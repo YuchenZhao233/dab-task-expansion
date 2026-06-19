@@ -1,0 +1,8 @@
+HINTS:
+- Airport and aircraft identifiers use different prefixes across the two databases. Normalize the surface prefix and compare the remaining code as text.
+- Flight identifiers also use different prefixes between flight event rows and fare coupon rows; preserve the numeric part as text when matching.
+- Airport city, longitude, latitude, and timezone are embedded in `airport_profiles.profile_note`.
+- Aircraft model and maximum range are embedded in `aircraft_profiles.profile_note`.
+- Use the Haversine formula for distance calculations with Earth radius 6371 km. Convert coordinate degrees to radians before applying the formula.
+- For unique city pairs, treat the route symmetrically by ordering the two city names lexicographically before grouping.
+- Distance ranges use lower-inclusive, upper-exclusive kilometer buckets: 0-999, 1000-1999, 2000-2999, 3000-3999, 4000-4999, 5000-5999, and 6000+.

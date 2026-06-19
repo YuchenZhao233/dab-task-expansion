@@ -40,6 +40,39 @@ query_*/logs/
 
 These files are useful while constructing tasks, but they are not required by the packaged task format.
 
+## Downloading Database Files
+
+Database files may be stored with Git LFS. Before cloning or pulling the repository, make sure Git LFS is installed:
+
+```bash
+git lfs version
+```
+
+If that command is missing, install Git LFS first, then enable it:
+
+```bash
+git lfs install
+```
+
+After cloning the repository, download the LFS-backed database files with:
+
+```bash
+git lfs pull
+```
+
+If you cloned before installing Git LFS, run:
+
+```bash
+git lfs install
+git lfs pull
+```
+
+You can check whether any LFS files are still pointers instead of downloaded database files with:
+
+```bash
+git lfs ls-files
+```
+
 ## Task Generation Skill
 
 A project-local Codex skill is provided to make it easier to generate more tasks in the same style:
@@ -61,4 +94,3 @@ At a high level, the skill workflow is:
 7. Verify that each task is solvable using only the visible databases.
 
 The generated tasks are intended for training use. They are not presented as a stronger or replacement public benchmark.
-

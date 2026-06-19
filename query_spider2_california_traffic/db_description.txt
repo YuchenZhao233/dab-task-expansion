@@ -1,0 +1,110 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. traffic_facts_database
+   - This database is stored in DuckDB and contains traffic collision event facts from California collision records.
+   - This database consists of one table:
+     - collision_events
+       - This table contains one row per collision event, with location, road, weather, severity, party-count, vehicle, collision-type, injury-count, and timestamp attributes.
+       - Fields:
+         - incident_code (str): Reformatted identifier for a collision event.
+         - jurisdiction (float): Reporting jurisdiction code.
+         - reporting_district (str): Reporting district label when available.
+         - chp_shift (str): California Highway Patrol shift label.
+         - population (str): Population band for the reporting area.
+         - county_city_location (int): County-city location code.
+         - county_location (str): County name.
+         - beat_type (str): Beat type classification.
+         - chp_beat_type (str): CHP beat type classification.
+         - primary_road (str): Primary road name.
+         - secondary_road (str): Secondary road name.
+         - distance (float): Distance from the reference point.
+         - direction (str): Direction from the reference point.
+         - intersection (float): Indicator for intersection collisions.
+         - weather_1 (str): Primary weather condition.
+         - weather_2 (str): Secondary weather condition.
+         - state_highway_indicator (float): Indicator for state-highway collisions.
+         - caltrans_county (str): Caltrans county label when available.
+         - caltrans_district (float): Caltrans district code.
+         - state_route (float): State route number.
+         - location_type (str): Highway or ramp location type.
+         - tow_away (float): Indicator for tow-away collisions.
+         - collision_severity (str): Overall severity category.
+         - killed_victims (float): Number of killed victims reported on the collision record.
+         - injured_victims (float): Number of injured victims reported on the collision record.
+         - party_count (float): Number of parties reported on the collision record.
+         - primary_collision_factor (str): Primary collision factor.
+         - pcf_violation_category (str): Primary collision factor violation category.
+         - hit_and_run (str): Hit-and-run classification.
+         - type_of_collision (str): Collision type.
+         - motor_vehicle_involved_with (str): Object or party the motor vehicle was involved with.
+         - pedestrian_action (str): Pedestrian action category.
+         - road_surface (str): Road surface condition.
+         - road_condition_1 (str): Primary road condition.
+         - lighting (str): Lighting condition.
+         - control_device (str): Traffic control device condition.
+         - pedestrian_collision (int): Indicator for pedestrian collisions.
+         - bicycle_collision (int): Indicator for bicycle collisions.
+         - motorcycle_collision (int): Indicator for motorcycle collisions.
+         - truck_collision (int): Indicator for truck collisions.
+         - not_private_property (float): Indicator for non-private-property collisions.
+         - alcohol_involved (float): Indicator for alcohol involvement.
+         - statewide_vehicle_type_at_fault (str): Statewide vehicle type at fault.
+         - chp_vehicle_type_at_fault (str): CHP vehicle type at fault.
+         - severe_injury_count (int): Severe injury count.
+         - other_visible_injury_count (int): Other visible injury count.
+         - complaint_of_pain_injury_count (int): Complaint-of-pain injury count.
+         - pedestrian_killed_count (int): Pedestrian killed count.
+         - pedestrian_injured_count (int): Pedestrian injured count.
+         - bicyclist_killed_count (int): Bicyclist killed count.
+         - bicyclist_injured_count (int): Bicyclist injured count.
+         - motorcyclist_killed_count (int): Motorcyclist killed count.
+         - motorcyclist_injured_count (float): Motorcyclist injured count.
+         - collision_date (str): Collision date in YYYY-MM-DD format.
+         - collision_time (str): Collision time in HH:MM:SS format.
+         - process_date (str): Process date in YYYY-MM-DD format.
+
+2. traffic_people_database
+   - This database is stored in SQLite and contains party and victim records associated with traffic collisions.
+   - This database consists of two tables:
+     - party_records
+       - This table contains one row per party record, including party demographics, at-fault status, sobriety, insurance, safety equipment notes, movement, and vehicle attributes.
+       - Fields:
+         - party_key (str): Obfuscated party identifier.
+         - incident_ref (str): Reformatted collision reference on participant records.
+         - party_number (int): Party number within the collision record.
+         - party_type (str): Party type such as driver, pedestrian, bicyclist, or parked vehicle.
+         - at_fault (int): Indicator for whether the party was marked at fault.
+         - party_sex (str): Party sex.
+         - party_age (float): Party age.
+         - sobriety_note (str): Sobriety assessment text.
+         - direction_of_travel (str): Direction of travel.
+         - equipment_notes (str): Semi-structured safety-equipment note containing primary and secondary equipment details.
+         - financial_responsibility (str): Insurance or financial-responsibility assessment.
+         - cellphone_in_use (float): Cellphone-in-use indicator.
+         - cellphone_use_type (str): Cellphone use category.
+         - other_associate_factor_1 (str): Primary other associated factor.
+         - party_number_killed (int): Number killed for this party.
+         - party_number_injured (int): Number injured for this party.
+         - movement_preceding_collision (str): Movement before collision.
+         - vehicle_year (float): Vehicle model year.
+         - vehicle_make (str): Vehicle make.
+         - statewide_vehicle_type (str): Statewide vehicle type.
+         - chp_vehicle_type_towing (str): CHP towing vehicle type.
+         - chp_vehicle_type_towed (str): CHP towed vehicle type.
+         - party_race (str): Party race label when available.
+
+     - victim_records
+       - This table contains one row per victim record, including victim role, demographics, injury degree, seating position, safety equipment notes, and ejection status.
+       - Fields:
+         - victim_key (str): Obfuscated victim identifier.
+         - incident_ref (str): Reformatted collision reference on victim records.
+         - party_number (int): Party number within the collision record.
+         - victim_role (str): Victim role such as passenger, driver, pedestrian, bicyclist, or non-injured party.
+         - victim_sex (str): Victim sex.
+         - victim_age (float): Victim age.
+         - victim_degree_of_injury (str): Injury degree category.
+         - victim_seating_position (str): Seating position category.
+         - equipment_notes (str): Semi-structured safety-equipment note containing primary and secondary equipment details.
+         - victim_ejected (str): Ejection status.

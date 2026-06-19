@@ -1,0 +1,6 @@
+HINTS:
+- Collision identifiers use different surface formats across the two databases and may require normalizing the nonnumeric prefix before comparing records.
+- The participant and victim safety-equipment columns from the source data were merged into `equipment_notes`; values such as helmet use, child restraint use, and harness use may appear in either the primary or secondary part of that note.
+- Treat "injured victim records" as victim records whose injury degree is not `no injury`.
+- Phrases such as "had been drinking" and "no proof of insurance" should be interpreted from the relevant text fields, not from separate boolean columns.
+- Collision years and hours must be extracted from the date and time text fields when a task asks for year- or hour-level analysis.

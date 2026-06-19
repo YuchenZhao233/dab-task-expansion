@@ -1,0 +1,7 @@
+db_clients:
+  traffic_facts_database:
+    db_type: duckdb
+    db_path: query_dataset/traffic_facts.duckdb
+  traffic_people_database:
+    db_type: sqlite
+    db_path: query_dataset/traffic_people.sqlite

@@ -79,6 +79,22 @@ Each final query directory must contain only normal DAB artifacts plus any inten
 
 ## Workflow
 
+## Token-Efficient Work Habits
+
+Prefer token-efficient inspection patterns when they do not reduce correctness or traceability.
+
+Useful defaults:
+
+- Write profiling and intermediate outputs to files, then inspect the smallest relevant slices.
+- Start with row counts, table names, join candidates, and targeted categorical distributions before reading large schemas or samples.
+- Use compact probes for candidate query design, such as `COUNT`, `GROUP BY ... LIMIT`, and selected columns.
+- Once the dataset shape is clear, prefer reusable scripts over many repeated ad hoc snippets.
+- Keep manual notes focused on selected/rejected query rationale and required DAB properties.
+
+These are guidance, not hard constraints. If a full schema, broad sample, verbose log, or extra diagnostic output is needed to avoid mistakes, use it.
+
+For optional agent smoke tests, prefer a quiet run followed by a concise summary from the runner JSONL logs. Stream detailed tool progress only when debugging a stuck run, investigating a failure, or when the user asks for live progress.
+
 ### 1. Profile Sources
 
 Run:

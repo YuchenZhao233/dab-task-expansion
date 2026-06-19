@@ -1,0 +1,59 @@
+You are working with three databases to solve this query.
+
+Here are the descriptions of these three databases:
+
+1. stacking_runs_database
+   - This database is stored in PostgreSQL and contains configured solution runs and step-level L1 model family assignments.
+   - This database consists of two tables:
+     - solution_runs
+       - Each row describes one configured solution version for a machine-learning problem.
+       - Fields:
+         - run_key (text): Run identifier.
+         - problem_run_key (text): Run-side problem identifier.
+         - version_label (text): Version label for the solution configuration.
+         - run_profile (text): Semi-structured run settings, including correlation, number of models, number of features, baseline score, test size, and resampling flag.
+     - step_assignments
+       - Each row describes the L1 model family assigned to one step of one run.
+       - Fields:
+         - run_key (text): Run identifier.
+         - step_label (text): Step label.
+         - l1_family_note (text): Semi-structured L1 model family note.
+
+2. stacking_metrics_database
+   - This database is stored in DuckDB and contains model score facts and feature-importance facts.
+   - This database consists of two tables:
+     - score_facts
+       - Each row stores one model score for one problem, version, and step.
+       - Fields:
+         - problem_score_key (text): Metrics-side problem identifier.
+         - version_number (integer): Solution version number.
+         - step_number (integer): Step number.
+         - model_label (text): Model label, including Stack and non-Stack models.
+         - train_score (double): Training score.
+         - test_score (double): Test score.
+     - feature_impacts
+       - Each row stores one feature-importance value for one problem, version, step, and feature.
+       - Fields:
+         - problem_score_key (text): Metrics-side problem identifier.
+         - version_number (integer): Solution version number.
+         - step_number (integer): Step number.
+         - feature_code (text): Metrics-side feature code.
+         - importance (double): Feature-importance value.
+
+3. stacking_profiles_database
+   - This database is stored in MongoDB and contains problem and feature profile documents.
+   - This database consists of two collections:
+     - problem_cards
+       - Each document describes one machine-learning problem.
+       - Fields:
+         - problem_doc_key (string): Profile-side problem identifier.
+         - display_name (string): Problem display name.
+         - problem_profile (string): Semi-structured problem details, including dataset type, target, and source path.
+     - feature_cards
+       - Each document describes one feature for one problem version.
+       - Fields:
+         - problem_doc_key (string): Profile-side problem identifier.
+         - version_label (string): Version label.
+         - feature_code (string): Feature code.
+         - feature_name (string): Original feature name.
+         - feature_note (string): Semi-structured feature details, including feature kind, numeric range, drop flags, and target flag.

@@ -1,0 +1,4 @@
+problem_card_id,problem_name,feature_record_count,avg_importance
+problem-card::solar-power-generation,Solar Power Generation,3,0.2943
+problem-card::oil-spill,oil spill,104,0.0001
+problem-card::pcos,PCOS,3,0.0000

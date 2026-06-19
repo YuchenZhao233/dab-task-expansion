@@ -1,0 +1,8 @@
+step_instance_key,problem_name,version,step,derived_status,stack_test_score
+run::kindey-stone-urine-analysis::v003::stage-1,kindey stone urine analysis,3,1,soft,1.0000
+run::kindey-stone-urine-analysis::v004::stage-1,kindey stone urine analysis,4,1,soft,1.0000
+run::kindey-stone-urine-analysis::v004::stage-2,kindey stone urine analysis,4,2,soft,1.0000
+run::kindey-stone-urine-analysis::v004::stage-3,kindey stone urine analysis,4,3,soft,1.0000
+run::oil-spill::v003::stage-1,oil spill,3,1,soft,0.9931
+run::oil-spill::v003::stage-2,oil spill,3,2,soft,0.9931
+run::kindey-stone-urine-analysis::v003::stage-2,kindey stone urine analysis,3,2,weak,0.9879

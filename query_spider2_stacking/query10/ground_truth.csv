@@ -1,0 +1,6 @@
+step_instance_key,problem_name,version,step,l1_model,stack_train,stack_test,gap
+run::pss3e5::v004::stage-2,PSS3E5,4,2,regression,1.0000,0.6204,0.3796
+run::pss3e5::v005::stage-2,PSS3E5,5,2,regression,1.0000,0.6449,0.3551
+run::pss3e5::v004::stage-3,PSS3E5,4,3,regression,0.9939,0.6408,0.3531
+run::pss3e5::v005::stage-1,PSS3E5,5,1,regression,0.9939,0.6531,0.3409
+run::pss3e5::v005::stage-3,PSS3E5,5,3,regression,1.0000,0.6735,0.3265

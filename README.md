@@ -33,7 +33,8 @@ The `query_dataset/` directory contains the visible databases used by agents. Qu
 | `query_spider2_california_traffic` | 8 |
 | `query_spider2_imdb_movies` | 8 |
 | `query_spider2_music` | 5 |
-| **Total** | **44** |
+| `query_spider2_stacking` | 10 |
+| **Total** | **54** |
 
 ## What Is Not Included
 

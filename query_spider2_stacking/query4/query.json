@@ -1,0 +1,1 @@
+"Among classification problems, which five have the most soft Stack outcomes? Sort by soft occurrence count descending, then average Stack test score descending, then problem name ascending. Return problem card ID, problem name, soft occurrence count, number of versions involved, and average Stack test score rounded to 4 decimals."

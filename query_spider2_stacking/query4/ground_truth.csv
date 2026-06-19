@@ -1,0 +1,6 @@
+problem_card_id,problem_name,soft_occurrence_count,version_count,avg_stack_test
+problem-card::kindey-stone-urine-analysis,kindey stone urine analysis,16,6,0.9932
+problem-card::oil-spill,oil spill,8,4,0.9810
+problem-card::smoke-detection-iot,smoke detection iot,5,4,1.0000
+problem-card::survey-lung-cancer,survey lung cancer,5,3,0.9738
+problem-card::lithium-ion-batteries,lithium ion batteries,4,2,1.0000

@@ -1,0 +1,1 @@
+"Across strong Stack steps, which five step instances show the largest Stack train-test score gap? Return step instance key, problem name, version, step, L1 model family, Stack train score, Stack test score, and gap, with scores rounded to 4 decimals."

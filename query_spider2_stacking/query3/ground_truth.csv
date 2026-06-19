@@ -1,0 +1,6 @@
+problem_card_id,problem_name,strong_step_count,total_margin
+problem-card::franck-hertz,Franck-Hertz,12,5.1836
+problem-card::tunnel-diode,Tunnel diode,11,0.3879
+problem-card::delaney-solubility,Delaney solubility,9,0.1570
+problem-card::concrete,concrete,7,0.0682
+problem-card::solar-power-generation,Solar Power Generation,16,0.0675

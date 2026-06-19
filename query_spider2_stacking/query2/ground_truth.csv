@@ -1,0 +1,7 @@
+problem_card_id,problem_name,solution_version_count,non_weak_occurrence_count
+problem-card::hospital-mortality-prediction,Hospital Mortality Prediction,6,3
+problem-card::iris,iris,7,4
+problem-card::liver-disease-prediction,Liver disease prediction,5,1
+problem-card::pumpkin-seeds,Pumpkin Seeds,4,0
+problem-card::water-quality,water quality,3,1
+problem-card::water-quality-2,water quality 2,3,1

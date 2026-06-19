@@ -1,0 +1,14 @@
+db_clients:
+  stacking_runs_database:
+    db_type: postgres
+    db_name: spider2_stacking_runs
+    sql_file: query_dataset/stacking_runs.sql
+
+  stacking_metrics_database:
+    db_type: duckdb
+    db_path: query_dataset/stacking_metrics.duckdb
+
+  stacking_profiles_database:
+    db_type: mongo
+    db_name: spider2_stacking_profiles
+    dump_folder: query_dataset/profile_mongo

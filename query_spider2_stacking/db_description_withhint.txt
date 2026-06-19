@@ -1,0 +1,7 @@
+HINTS:
+- Problem identifiers use different wrappers in the three databases. The normalized problem token inside each identifier is the stable part to match across systems.
+- Version and step values also use different surfaces: some are numeric, while others are embedded in labels such as version labels or stage labels.
+- A derived Stack status is strong when the Stack model's test score is greater than the maximum test score of all non-Stack models for the same problem, version, and step. It is soft when the Stack model's test score equals that maximum. Other cases are weak.
+- L1 model family values are stored inside the L1 family note, and solution settings such as resampling are stored inside the run profile.
+- Problem type and target details are stored inside problem profile text. Feature drop flags are stored inside feature note text.
+- When a query asks for rounded values, round only the final reported metric.

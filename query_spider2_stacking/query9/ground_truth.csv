@@ -1,0 +1,6 @@
+run_key,problem_name,version,strong_count,soft_count,avg_stack_test
+run::kindey-stone-urine-analysis::v004,kindey stone urine analysis,4,0,3,1.0000
+run::kindey-stone-urine-analysis::v005,kindey stone urine analysis,5,0,3,1.0000
+run::kindey-stone-urine-analysis::v006,kindey stone urine analysis,6,0,3,1.0000
+run::kindey-stone-urine-analysis::v007,kindey stone urine analysis,7,0,3,1.0000
+run::oil-spill::v005,oil spill,5,3,0,0.9885

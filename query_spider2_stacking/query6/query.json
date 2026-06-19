@@ -1,0 +1,1 @@
+"Considering only strong Stack steps, which problems have nonzero feature-importance records for features marked as dropped by correlation? Return all such problem card IDs, problem names, contributing feature-record counts, and average importance rounded to 4 decimals."

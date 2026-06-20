@@ -1,0 +1,52 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. reviews_db
+   - This database is stored in a DuckDB database and contains the album review records published by a music publication, with one record per review.
+   - This database consists of one table:
+     - reviews
+       - This table contains one record per album review.
+       - Fields:
+         - reviewid (int): Review identifier
+         - title (str): Album title
+         - artist (str): Primary credited artist for the review
+         - url (str): Review web address
+         - score (float): Review score on a 0 to 10 scale
+         - best_new_music (int): Flag, 1 if the album was named best new music, otherwise 0
+         - author (str): Name of the reviewer
+         - author_type (str): Role of the reviewer
+         - pub_date (str): Publication date
+         - pub_weekday (int): Day of week of publication
+         - pub_day (int): Day of month of publication
+         - pub_month (int): Month of publication
+         - pub_year (int): Year of publication
+
+2. catalog_db
+   - This database is stored in a SQLite database and contains the full review text and the contextual attributes of each review: its genres, the record labels, the album release years, and the credited artists.
+   - This database consists of five tables:
+     - content
+       - This table contains the full text of each review.
+       - Fields:
+         - reviewid (int): Review identifier
+         - content (str): Full free-text body of the review
+     - genres
+       - This table lists genres associated with reviews. A review may have several genres, one per row, and some reviews have none.
+       - Fields:
+         - reviewid (int): Review identifier
+         - genre (str): Genre label
+     - labels
+       - This table lists record labels associated with reviews. A review may list several labels, one per row.
+       - Fields:
+         - reviewid (int): Review identifier
+         - label (str): Record label name
+     - years
+       - This table lists release years associated with reviews. A review may have several release years, one per row.
+       - Fields:
+         - reviewid (int): Review identifier
+         - year (int): Album release year
+     - artists
+       - This table lists the artists associated with reviews.
+       - Fields:
+         - reviewid (int): Review identifier
+         - artist (str): Artist name

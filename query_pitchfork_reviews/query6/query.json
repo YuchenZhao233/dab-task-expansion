@@ -1,0 +1,1 @@
+"Assign each review to a release decade based on the album's earliest listed release year (for example, a 1993 release belongs to the 1990 decade). Considering only decades that have at least 300 scored reviews, which release decade has the highest average review score? Return the decade (as the starting year, e.g. 1990) and the average score rounded to two decimals."

@@ -1,0 +1,1 @@
+"Looking only at delivered order items priced above zero, and considering English product categories that have at least 1000 such items, which category has the highest average freight-to-price ratio (the per-item freight value divided by its price, averaged over the items)? Return the English category name and the average ratio rounded to two decimals."

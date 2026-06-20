@@ -1,0 +1,8 @@
+db_clients:
+  reviews_db:
+    db_type: duckdb
+    db_path: query_dataset/reviews.duckdb
+
+  catalog_db:
+    db_type: sqlite
+    db_path: query_dataset/catalog.db

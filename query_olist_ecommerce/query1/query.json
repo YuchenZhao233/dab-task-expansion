@@ -1,0 +1,1 @@
+"Considering only orders with a status of delivered, which English product category generated the highest total product revenue (the sum of item prices, excluding freight)? Return the English category name and the total revenue rounded to two decimals. If two categories tie, return the one whose English name is lexicographically smallest."

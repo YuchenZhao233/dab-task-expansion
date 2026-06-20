@@ -1,0 +1,7 @@
+HINTS:
+- Product categories are stored in Portuguese on products; an English category name must be obtained through the Portuguese-to-English category mapping.
+- A product's category can be missing; items whose product has no category mapping are not attributed to any English category.
+- Order timestamps are ISO-formatted strings. An order is considered late when its delivery calendar date to the customer falls after its estimated delivery calendar date (compare dates, not times).
+- Monetary item revenue refers to the item price and excludes the freight charge.
+- An order may receive more than one review; treat an order's review score as the average of its review scores before aggregating further.
+- Customer location is given by the two-letter state code on the customer record linked to the order.

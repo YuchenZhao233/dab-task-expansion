@@ -1,0 +1,1 @@
+"Each customer is assigned a support representative (an employee). Attributing every invoice to the support representative of its customer, which support representative accounts for the highest total invoice revenue? Return the representative's full name (first name then last name) and the total revenue rounded to two decimals."

@@ -1,0 +1,5 @@
+HINTS:
+- Revenue on a line item is UnitPrice multiplied by Quantity in InvoiceLine; an invoice's Total is already the sum of its line items.
+- A track's genre, album, and artist are reached through Track.GenreId, Track.AlbumId, then Album.ArtistId.
+- A customer's support representative is the Employee whose EmployeeId equals Customer.SupportRepId.
+- Track duration is stored in milliseconds; divide by 60000 to convert to minutes.

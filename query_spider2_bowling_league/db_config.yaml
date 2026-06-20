@@ -1,0 +1,14 @@
+db_clients:
+  bowling_scores_database:
+    db_type: duckdb
+    db_path: query_dataset/bowling_scores.duckdb
+
+  bowling_roster_database:
+    db_type: postgres
+    db_name: spider2_bowling_roster
+    sql_file: query_dataset/bowling_roster.sql
+
+  bowling_tournament_database:
+    db_type: mongo
+    db_name: spider2_bowling_tournaments
+    dump_folder: query_dataset/tournament_mongo

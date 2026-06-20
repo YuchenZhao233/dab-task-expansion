@@ -1,0 +1,1 @@
+"For each tournament venue, which team recorded the most match-game wins? Break ties alphabetically by team name to choose the venue winner. Return venue, team roster ID, team name, and win count. Row order is not important."

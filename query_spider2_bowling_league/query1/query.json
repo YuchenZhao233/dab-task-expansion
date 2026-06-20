@@ -1,0 +1,1 @@
+"Which bowlers won games with handicap scores of 190 or less at all three venues: Thunderbird Lanes, Totem Lanes, and Bolero Lanes? Return only the qualifying game records at those three venues with bowler roster ID, first name, last name, match score ID, game code, handicap score, tournament date, and venue. Row order is not important."

@@ -1,0 +1,63 @@
+You are working with three databases to solve this query.
+
+Here are the descriptions of these three databases:
+
+1. bowling_scores_database
+   - This database is stored in DuckDB and contains game-level bowling score facts and match-game winner facts.
+   - This database consists of two tables:
+     - game_scores
+       - Each row stores one bowler's score in one game of one match.
+       - Fields:
+         - match_score_id (str): Score-side match identifier.
+         - game_code (str): Game label within the match.
+         - bowler_score_key (str): Score-side bowler identifier.
+         - raw_score (int): Bowler's raw score.
+         - handicap_score (int): Bowler's handicap-adjusted score.
+         - won_marker (str): Marker indicating whether the bowler won that game.
+     - game_results
+       - Each row stores the winning team for one game of one match.
+       - Fields:
+         - match_score_id (str): Score-side match identifier.
+         - game_code (str): Game label within the match.
+         - winning_team_key (str): Score-side team identifier for the winning team.
+
+2. bowling_roster_database
+   - This database is stored in PostgreSQL and contains bowler, team, and ZIP registry information for the bowling league.
+   - This database consists of three tables:
+     - bowler_registry
+       - Each row describes one registered bowler.
+       - Fields:
+         - bowler_roster_id (str): Roster-side bowler identifier.
+         - first_name (str): Bowler first name.
+         - last_name (str): Bowler last name.
+         - team_roster_id (str): Roster-side team identifier.
+         - city_zip_note (str): Semi-structured city, state, and ZIP information.
+         - performance_note (str): Semi-structured current average, current handicap, games bowled, and total pins information.
+     - team_registry
+       - Each row describes one league team.
+       - Fields:
+         - team_roster_id (str): Roster-side team identifier.
+         - team_name (str): Team name.
+         - captain_token (str): Roster-side captain identifier.
+     - zip_registry
+       - Each row describes a Washington ZIP code record.
+       - Fields:
+         - zip_code (str): ZIP code.
+         - city_name (str): City name.
+         - state_code (str): State abbreviation.
+
+3. bowling_tournament_database
+   - This database is stored in MongoDB and contains tournament and match schedule documents.
+   - This database consists of two collections:
+     - tournament_cards
+       - Each document describes one tournament event.
+       - Fields:
+         - event_doc_key (str): Tournament document identifier.
+         - event_number (str): Tournament event label.
+         - event_note (str): Semi-structured tournament date and venue information.
+     - match_cards
+       - Each document describes one match scheduled within a tournament.
+       - Fields:
+         - fixture_doc_key (str): Match document identifier.
+         - event_doc_key (str): Tournament document identifier.
+         - lane_note (str): Semi-structured lane pair and odd/even lane team information.

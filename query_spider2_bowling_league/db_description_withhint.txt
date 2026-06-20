@@ -1,0 +1,7 @@
+HINTS:
+- Identifiers for the same bowling entity use different wrappers across databases. The embedded numeric part is the stable part to normalize when matching score, roster, and tournament records.
+- Game labels such as G1, G2, and G3 correspond to game numbers inside a match.
+- In game_scores, won_marker value Y means the bowler won that game.
+- Tournament dates and venues are stored inside event_note. Lane pairs and odd/even lane teams are stored inside lane_note.
+- Bowler city, ZIP, current average, and current handicap values are stored inside semi-structured roster notes.
+- When a question mentions low-handicap wins, use winning games whose handicap score is 190 or less.

@@ -1,0 +1,12 @@
+bowler_id,first_name,last_name,match_score_id,game_code,handicap_score,tournament_date,venue
+roster-bowler-013,Elizabeth,Hallmark,score-match-010,G1,189,2017-09-18,Bolero Lanes
+roster-bowler-013,Elizabeth,Hallmark,score-match-024,G3,190,2017-10-09,Totem Lanes
+roster-bowler-013,Elizabeth,Hallmark,score-match-034,G1,189,2017-10-30,Thunderbird Lanes
+roster-bowler-025,Megan,Patterson,score-match-007,G1,188,2017-09-11,Thunderbird Lanes
+roster-bowler-025,Megan,Patterson,score-match-021,G1,189,2017-10-09,Totem Lanes
+roster-bowler-025,Megan,Patterson,score-match-035,G1,187,2017-10-30,Thunderbird Lanes
+roster-bowler-025,Megan,Patterson,score-match-039,G2,181,2017-11-06,Bolero Lanes
+roster-bowler-019,John,Viescas,score-match-007,G3,185,2017-09-11,Thunderbird Lanes
+roster-bowler-019,John,Viescas,score-match-012,G1,181,2017-09-18,Bolero Lanes
+roster-bowler-019,John,Viescas,score-match-036,G1,179,2017-10-30,Thunderbird Lanes
+roster-bowler-019,John,Viescas,score-match-052,G2,185,2017-11-27,Totem Lanes

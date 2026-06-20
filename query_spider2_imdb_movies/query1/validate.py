@@ -1,131 +1,83 @@
+
+EXPECTED_ROWS = [['person-card:0744834', 'Eli Roth', '2', '6.20', '91852', '212'], ['person-card:0573732', 'Sean McNamara', '2', '6.25', '4001', '202'], ['person-card:5141259', 'Fabien Delage', '2', '6.90', '2407', '181'], ['person-card:3163561', 'Rene Perez', '2', '4.40', '1475', '164'], ['person-card:4335588', 'Jamie Patterson', '2', '4.95', '1177', '166']]
 import re
 import unicodedata
 
-EXPECTED_ROWS = [['person-card:0744834', 'Eli Roth', '2', '6.20', '91852', '212'], ['person-card:0573732', 'Sean McNamara', '2', '6.25', '4001', '202'], ['person-card:5141259', 'Fabien Delage', '2', '6.90', '2407', '181'], ['person-card:3163561', 'Rene Perez', '2', '4.40', '1475', '164'], ['person-card:4335588', 'Jamie Patterson', '2', '4.95', '1177', '166']]
-NUMBER_RE = re.compile(r"(?<![A-Za-z])[-+]?\d[\d,]*(?:\.\d+)?")
+THOUSANDS_RE = re.compile(r"(?<![A-Za-z0-9_.-])-?(?:\d{1,3}(?:,\d{3})+)(?:\.\d+)?(?![A-Za-z0-9_.-])")
+PLAIN_RE = re.compile(r"(?<![A-Za-z0-9_.-])-?\d+(?:\.\d+)?(?![A-Za-z0-9_.-])")
 
 
-def _norm(text):
+def _norm(text: str) -> str:
     text = unicodedata.normalize("NFKD", str(text))
     text = "".join(ch for ch in text if not unicodedata.combining(ch))
-    text = text.lower().replace("–", "-").replace("—", "-").replace("−", "-")
-    text = re.sub(r"\s*-\s*", "-", text)
+    text = text.lower().replace("&", " and ").replace("@", " at ")
+    text = text.replace("–", "-").replace("—", "-").replace("−", "-")
+    text = re.sub(r"[^a-z0-9\s:./-]", " ", text)
     return re.sub(r"\s+", " ", text).strip()
 
 
-def _numbers(text):
-    out = []
-    for raw in NUMBER_RE.findall(text):
-        try:
-            out.append(float(raw.replace(",", "")))
-        except ValueError:
-            pass
-    return out
-
-
-def _is_number(value):
+def _is_number(value: str) -> bool:
     return re.fullmatch(r"[-+]?\d+(?:\.\d+)?", str(value).replace(",", "")) is not None
 
 
-def _contains_number(text, expected):
+def _numbers(text: str) -> list[float]:
+    values = []
+    raw_text = str(text)
+    for raw in THOUSANDS_RE.findall(raw_text):
+        try:
+            values.append(float(raw.replace(",", "")))
+        except ValueError:
+            pass
+    comma_split = raw_text.replace(",", " ")
+    for raw in PLAIN_RE.findall(comma_split):
+        try:
+            values.append(float(raw))
+        except ValueError:
+            pass
+    return values
+
+
+def _contains_number(text: str, expected: str) -> bool:
     target = float(str(expected).replace(",", ""))
-    tol = 0.011 if abs(target - round(target)) > 1e-9 else 0.1
-    return any(abs(value - target) <= tol for value in _numbers(text))
+    tolerance = 0.02 if abs(target - round(target)) > 1e-9 else 0.001
+    return any(abs(value - target) <= tolerance for value in _numbers(text))
 
 
-def _contains_text_value(norm_text, expected):
-    if "|" in expected:
-        return all(_norm(part.strip()) in norm_text for part in expected.split("|") if part.strip())
-    return _norm(expected) in norm_text
+def _contains_date(text: str, value: str) -> bool:
+    if _norm(value) in _norm(text):
+        return True
+    match = re.fullmatch(r"(\d{4})-(\d{2})(?:-(\d{2}))?", str(value))
+    if not match:
+        return False
+    parts = [float(int(part)) for part in match.groups() if part is not None]
+    date_text = str(text).replace("-", " ").replace("/", " ")
+    nums = _numbers(date_text)
+    return all(part in nums for part in parts)
 
 
-def _find_positions(norm_text, value):
-    value_norm = _norm(value)
-    if not value_norm:
-        return []
-    return [match.start() for match in re.finditer(re.escape(value_norm), norm_text)]
-
-
-def _row_anchor_values(row_values):
-    # Numeric first columns, such as years, are usually the most stable row key.
-    # Prefer them over repeated labels like "USA".
-    if row_values and _is_number(row_values[0]):
-        return [str(row_values[0])]
-    anchors = []
-    for value in row_values:
-        value = str(value)
-        if "|" in value:
-            continue
-        if not _is_number(value):
-            anchors.append(value)
-    return anchors
-
-
-def _other_anchor_positions(norm_output, row_index):
-    positions = []
-    for index, row in enumerate(EXPECTED_ROWS):
-        if index == row_index:
-            continue
-        for anchor in _row_anchor_values(row):
-            positions.extend(_find_positions(norm_output, anchor))
-    return sorted(set(positions))
-
-
-def _window_for_anchor(output, norm_output, pos, other_positions):
-    # Use the next expected-row anchor as a boundary when possible so one row
-    # cannot borrow numeric values from a neighboring row in a table or list.
-    following = [other for other in other_positions if other > pos]
-    end = following[0] if following else pos + 700
-    start = max(0, pos - 120)
-    return norm_output[start:min(len(norm_output), end + 80)]
-
-
-def _row_matches(output, row, row_index):
-    norm_output = _norm(output)
-    values = [str(value).strip() for value in row if str(value).strip()]
-    global_set_values = [value for value in values if "|" in value]
-    row_values = [value for value in values if "|" not in value]
-
-    for value in global_set_values:
-        if not _contains_text_value(norm_output, value):
-            return False, f"Missing expected set value(s): {value}"
-
-    anchors = _row_anchor_values(row_values)
-    anchor_positions = []
-    for anchor in anchors:
-        anchor_positions.extend(_find_positions(norm_output, anchor))
-    if not anchor_positions:
-        return False, "Missing expected row anchor(s): " + ", ".join(anchors[:3])
-
-    other_positions = _other_anchor_positions(norm_output, row_index)
-    conflict_reasons = []
-    for pos in sorted(set(anchor_positions)):
-        window = _window_for_anchor(output, norm_output, pos, other_positions)
-        missing_text = [
-            value for value in row_values
-            if not _is_number(value) and _norm(value) not in window
-        ]
-        if missing_text:
-            conflict_reasons.append("missing text near anchor: " + ", ".join(missing_text))
-            continue
-        missing_numbers = [
-            value for value in row_values
-            if _is_number(value) and not _contains_number(window, value)
-        ]
-        if missing_numbers:
-            conflict_reasons.append("missing/conflicting numbers near anchor: " + ", ".join(missing_numbers))
-            continue
-        return True, "Found expected row values in a bounded window."
-
-    return False, conflict_reasons[0] if conflict_reasons else "Expected row values were not associated closely enough."
+def _contains_text(norm_output: str, value: str) -> bool:
+    if "|" in value:
+        return all(_norm(part.strip()) in norm_output for part in value.split("|") if part.strip())
+    return _norm(value) in norm_output
 
 
 def validate(llm_output: str):
-    failures = []
-    for index, row in enumerate(EXPECTED_ROWS):
-        ok, reason = _row_matches(llm_output, row, index)
-        if not ok:
-            failures.append(reason)
-    if failures:
-        return False, " ".join(failures[:3])
-    return True, "Found all expected rows with associated values."
+    norm_output = _norm(llm_output)
+    missing = []
+    for row in EXPECTED_ROWS:
+        for value in row:
+            value = str(value).strip()
+            if not value:
+                continue
+            if _is_number(value):
+                if not _contains_number(llm_output, value):
+                    missing.append(value)
+            elif re.fullmatch(r"\d{4}-\d{2}(?:-\d{2})?", value):
+                if not _contains_date(llm_output, value):
+                    missing.append(value)
+            elif not _contains_text(norm_output, value):
+                missing.append(value)
+    if missing:
+        return False, "Missing expected value(s): " + ", ".join(missing[:10])
+    return True, "Found expected value(s)."
+

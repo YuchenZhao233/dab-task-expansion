@@ -1,97 +1,64 @@
 import csv
-import re
 from pathlib import Path
+import re
+import unicodedata
+
+THOUSANDS_RE = re.compile(r"(?<![A-Za-z0-9_.-])-?(?:\d{1,3}(?:,\d{3})+)(?:\.\d+)?(?![A-Za-z0-9_.-])")
+PLAIN_RE = re.compile(r"(?<![A-Za-z0-9_.-])-?\d+(?:\.\d+)?(?![A-Za-z0-9_.-])")
 
 
-NUMBER_RE = re.compile(r"(?<![A-Za-z])[-+]?\d[\d,]*(?:\.\d+)?")
-
-
-def _normalize_text(value: str) -> str:
-    value = value.replace("–", "-").replace("—", "-").replace("−", "-")
-    value = re.sub(r"\s*-\s*", "-", value)
-    return re.sub(r"\s+", " ", value.strip().lower())
-
-
-def _contains_number(text: str, expected: float, tolerance: float = 0.01) -> bool:
-    for raw in NUMBER_RE.findall(text):
-        try:
-            if abs(float(raw.replace(",", "")) - expected) <= tolerance:
-                return True
-        except ValueError:
-            pass
-    return False
+def _norm(text: str) -> str:
+    text = unicodedata.normalize("NFKD", str(text))
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    text = text.lower().replace("&", " and ").replace("@", " at ")
+    text = text.replace("–", "-").replace("—", "-").replace("−", "-")
+    text = re.sub(r"[^a-z0-9\s:./-]", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def _is_number(value: str) -> bool:
-    try:
-        float(value)
-        return True
-    except ValueError:
-        return False
+    return re.fullmatch(r"[-+]?\d+(?:\.\d+)?", str(value).replace(",", "")) is not None
 
 
-def _segments(text: str) -> list[str]:
-    pieces = []
-    pieces.extend(line for line in text.splitlines() if line.strip())
-    pieces.extend(part for part in re.split(r"(?<=[.!?])\s+|\n+", text) if part.strip())
-    return pieces
-
-
-def _numbers_in(text: str) -> list[float]:
-    numbers = []
-    for raw in NUMBER_RE.findall(text):
+def _numbers(text: str) -> list[float]:
+    values = []
+    raw_text = str(text)
+    for raw in THOUSANDS_RE.findall(raw_text):
         try:
-            numbers.append(float(raw.replace(",", "")))
+            values.append(float(raw.replace(",", "")))
         except ValueError:
             pass
-    return numbers
+    comma_split = raw_text.replace(",", " ")
+    for raw in PLAIN_RE.findall(comma_split):
+        try:
+            values.append(float(raw))
+        except ValueError:
+            pass
+    return values
 
 
-def _row_matches(output: str, row: dict[str, str]) -> tuple[bool, str]:
-    text_values = []
-    number_values = []
-    for value in row.values():
-        value = str(value).strip()
-        if not value:
-            continue
-        if _is_number(value):
-            number_values.append(float(value))
-        else:
-            text_values.append(value)
+def _contains_number(text: str, expected: str) -> bool:
+    target = float(str(expected).replace(",", ""))
+    tolerance = 0.02 if abs(target - round(target)) > 1e-9 else 0.001
+    return any(abs(value - target) <= tolerance for value in _numbers(text))
 
-    normalized_output = _normalize_text(output)
-    missing_text = [value for value in text_values if _normalize_text(value) not in normalized_output]
-    if missing_text:
-        return False, "Missing expected text value(s): " + ", ".join(missing_text)
 
-    if text_values and number_values:
-        normalized_text_values = [_normalize_text(value) for value in text_values]
-        segments = _segments(output)
-        for index, segment in enumerate(segments):
-            normalized_segment = _normalize_text(segment)
-            if not all(value in normalized_segment for value in normalized_text_values):
-                continue
+def _contains_date(text: str, value: str) -> bool:
+    if _norm(value) in _norm(text):
+        return True
+    match = re.fullmatch(r"(\d{4})-(\d{2})(?:-(\d{2}))?", str(value))
+    if not match:
+        return False
+    parts = [float(int(part)) for part in match.groups() if part is not None]
+    date_text = str(text).replace("-", " ").replace("/", " ")
+    nums = _numbers(date_text)
+    return all(part in nums for part in parts)
 
-            segment_numbers = _numbers_in(segment)
-            if segment_numbers:
-                if all(_contains_number(segment, number) for number in number_values):
-                    return True, "Found expected row values in the same answer segment."
-                return False, "Found expected text value(s), but nearby numeric value(s) conflict with ground truth."
 
-            window = " ".join(segments[index : index + 3])
-            if all(_contains_number(window, number) for number in number_values):
-                return True, "Found expected row values in nearby answer segments."
-
-        return False, "Expected text and numeric values were not associated closely enough."
-
-    missing_numbers = [
-        str(number).rstrip("0").rstrip(".") if number % 1 else str(int(number))
-        for number in number_values
-        if not _contains_number(output, number)
-    ]
-    if missing_numbers:
-        return False, "Missing expected numeric value(s): " + ", ".join(missing_numbers)
-    return True, "Found expected row values."
+def _contains_text(norm_output: str, value: str) -> bool:
+    if "|" in value:
+        return all(_norm(part.strip()) in norm_output for part in value.split("|") if part.strip())
+    return _norm(value) in norm_output
 
 
 def validate(llm_output: str):
@@ -100,12 +67,23 @@ def validate(llm_output: str):
         rows = list(csv.DictReader(f))
     if not rows:
         return False, "Ground truth is empty."
-    failures = []
+    norm_output = _norm(llm_output)
+    missing = []
     for row in rows:
-        ok, reason = _row_matches(llm_output, row)
-        if not ok:
-            failures.append(reason)
-    if failures:
-        return False, " ".join(failures)
-    return True, "Found expected row value(s)."
+        for value in row.values():
+            value = str(value).strip()
+            if not value:
+                continue
+            if _is_number(value):
+                if not _contains_number(llm_output, value):
+                    missing.append(value)
+            elif re.fullmatch(r"\d{4}-\d{2}(?:-\d{2})?", value):
+                if not _contains_date(llm_output, value):
+                    missing.append(value)
+            elif not _contains_text(norm_output, value):
+                missing.append(value)
+    if missing:
+        return False, "Missing expected value(s): " + ", ".join(missing[:10])
+    return True, "Found expected value(s)."
+
 

@@ -1,0 +1,1 @@
+"For each tournament month, which team had the most match-game wins? Break ties alphabetically by team name. Return month, team ID, team name, win count, and number of tournaments held that month. Row order is not important."

@@ -1,0 +1,6 @@
+HINTS:
+- A review can be linked to several genres, labels, and release years; each appears as a separate row, so joining these tables fans out a review into multiple rows.
+- Genre and label membership for a review is determined only by the corresponding context table, not by the review text.
+- Whether a review's text "mentions" a word is decided by a case-insensitive search for that word as a substring of the full review body.
+- A review's score is on a 0 to 10 scale; treat best new music as the flag value 1.
+- Publication year is given by the review record, not by an album release year.

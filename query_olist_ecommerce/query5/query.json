@@ -1,0 +1,1 @@
+"Among orders with a status of delivered, how many have at least one customer review whose comment message mentions a delay (the message contains the substring 'atrasad', case-insensitive, covering forms such as 'atrasado' and 'atrasada')? Return the count of distinct delivered orders."

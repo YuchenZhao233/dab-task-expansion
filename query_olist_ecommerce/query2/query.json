@@ -1,0 +1,1 @@
+"Among delivered orders placed by customers located in the state of SP, what percentage of those orders were delivered to the customer after their estimated delivery date? Consider only orders with status delivered that have an actual customer delivery date. Return the percentage rounded to two decimals."

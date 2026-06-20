@@ -1,0 +1,8 @@
+db_clients:
+  commerce_db:
+    db_type: duckdb
+    db_path: query_dataset/commerce.duckdb
+
+  catalog_db:
+    db_type: sqlite
+    db_path: query_dataset/catalog.db

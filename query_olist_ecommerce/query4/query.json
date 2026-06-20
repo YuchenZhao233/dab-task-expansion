@@ -1,0 +1,1 @@
+"Considering only items belonging to orders with a status of delivered, which seller state generated the highest total product revenue (the sum of item prices, excluding freight)? Return the two-letter seller state code and the total revenue rounded to two decimals."

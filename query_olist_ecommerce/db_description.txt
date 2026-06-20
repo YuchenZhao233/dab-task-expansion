@@ -1,0 +1,82 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. commerce_db
+   - This database is stored in a DuckDB database and contains the transactional records of a Brazilian online marketplace: customer orders, the individual items within each order, and the payments made for each order.
+   - This database consists of three tables:
+     - orders
+       - This table contains one record per customer order.
+       - Fields:
+         - order_id (str): Order identifier
+         - customer_id (str): Identifier of the customer who placed the order
+         - order_status (str): Order status, such as delivered, shipped, canceled, or invoiced
+         - order_purchase_timestamp (str): Timestamp when the order was placed
+         - order_approved_at (str): Timestamp when payment for the order was approved
+         - order_delivered_carrier_date (str): Timestamp when the order was handed to the logistics carrier
+         - order_delivered_customer_date (str): Timestamp when the order was delivered to the customer
+         - order_estimated_delivery_date (str): Estimated delivery date promised to the customer
+     - order_items
+       - This table contains one record per item within an order. An order can contain several items.
+       - Fields:
+         - order_id (str): Order identifier
+         - order_item_id (int): Sequential number of the item within the order
+         - product_id (str): Identifier of the purchased product
+         - seller_id (str): Identifier of the seller that fulfilled the item
+         - shipping_limit_date (str): Seller's shipping limit timestamp for the item
+         - price (float): Item product price
+         - freight_value (float): Item freight (shipping) charge
+     - order_payments
+       - This table contains one record per payment installment associated with an order.
+       - Fields:
+         - order_id (str): Order identifier
+         - payment_sequential (int): Sequence number of the payment within the order
+         - payment_type (str): Payment method, such as credit_card or boleto
+         - payment_installments (int): Number of installments
+         - payment_value (float): Value of the payment
+
+2. catalog_db
+   - This database is stored in a SQLite database and contains reference and context information about the products, the customers, the sellers, and the reviews left for orders.
+   - This database consists of five tables:
+     - products
+       - This table contains one record per product.
+       - Fields:
+         - product_id (str): Product identifier
+         - product_category_name (str): Product category name in Portuguese
+         - product_name_lenght (int): Character length of the product name
+         - product_description_lenght (int): Character length of the product description
+         - product_photos_qty (int): Number of product photos
+         - product_weight_g (int): Product weight in grams
+         - product_length_cm (int): Product length in centimeters
+         - product_height_cm (int): Product height in centimeters
+         - product_width_cm (int): Product width in centimeters
+     - product_category_translation
+       - This table maps product category names from Portuguese to English.
+       - Fields:
+         - product_category_name (str): Product category name in Portuguese
+         - product_category_name_english (str): Product category name in English
+     - customers
+       - This table contains one record per customer entry tied to an order.
+       - Fields:
+         - customer_id (str): Customer identifier as used on orders
+         - customer_unique_id (str): Stable identifier of the underlying person across orders
+         - customer_zip_code_prefix (int): First digits of the customer's postal code
+         - customer_city (str): Customer city name
+         - customer_state (str): Two-letter customer state code
+     - sellers
+       - This table contains one record per seller.
+       - Fields:
+         - seller_id (str): Seller identifier
+         - seller_zip_code_prefix (int): First digits of the seller's postal code
+         - seller_city (str): Seller city name
+         - seller_state (str): Two-letter seller state code
+     - order_reviews
+       - This table contains customer reviews submitted for orders.
+       - Fields:
+         - review_id (str): Review identifier
+         - order_id (str): Order identifier the review refers to
+         - review_score (int): Review score from 1 to 5
+         - review_comment_title (str): Optional free-text review title
+         - review_comment_message (str): Optional free-text review message
+         - review_creation_date (str): Date the review survey was created
+         - review_answer_timestamp (str): Timestamp the review was answered

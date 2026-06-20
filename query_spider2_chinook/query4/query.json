@@ -1,0 +1,1 @@
+"Across all sold line items, which artist generated the highest total revenue, where a line item's revenue is its unit price multiplied by its quantity and each track maps to an artist through its album? Return the artist name and the total revenue rounded to two decimals."

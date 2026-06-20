@@ -1,0 +1,1 @@
+"Grouping invoices by the country of the customer they were billed to, which customer country has the highest total invoice spend (the sum of invoice totals)? Return the country and the total spend rounded to two decimals."

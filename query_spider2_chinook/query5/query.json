@@ -1,0 +1,1 @@
+"Considering only tracks that have been sold at least once, which track has the longest duration? Return the track name and its duration in minutes (milliseconds divided by 60000) rounded to two decimals."

@@ -1,0 +1,98 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. sales_db
+   - This database is stored in a DuckDB database and contains the sales transactions of a digital media store: customer invoices and the individual line items billed on each invoice.
+   - This database consists of two tables:
+     - Invoice
+       - This table contains one record per invoice issued to a customer.
+       - Fields:
+         - InvoiceId (int): Invoice identifier
+         - CustomerId (int): Identifier of the customer billed on the invoice
+         - InvoiceDate (str): Date the invoice was issued
+         - BillingAddress (str): Billing street address
+         - BillingCity (str): Billing city
+         - BillingState (str): Billing state or province
+         - BillingCountry (str): Billing country
+         - BillingPostalCode (str): Billing postal code
+         - Total (float): Total amount billed on the invoice
+     - InvoiceLine
+       - This table contains one record per line item on an invoice. An invoice can have several line items.
+       - Fields:
+         - InvoiceLineId (int): Line item identifier
+         - InvoiceId (int): Invoice the line item belongs to
+         - TrackId (int): Identifier of the purchased track
+         - UnitPrice (float): Price per unit for the track
+         - Quantity (int): Number of units purchased on the line
+
+2. catalog_db
+   - This database is stored in a SQLite database and contains the media catalog and the people context of the store: tracks, their albums and artists, genres and media types, plus customers and employees.
+   - This database consists of seven tables:
+     - Track
+       - This table contains one record per track available in the store.
+       - Fields:
+         - TrackId (int): Track identifier
+         - Name (str): Track title
+         - AlbumId (int): Identifier of the album the track belongs to
+         - MediaTypeId (int): Identifier of the track's media type
+         - GenreId (int): Identifier of the track's genre
+         - Composer (str): Composer credited on the track
+         - Milliseconds (int): Track duration in milliseconds
+         - Bytes (int): Track file size in bytes
+         - UnitPrice (float): Catalog unit price of the track
+     - Album
+       - This table contains one record per album.
+       - Fields:
+         - AlbumId (int): Album identifier
+         - Title (str): Album title
+         - ArtistId (int): Identifier of the album's artist
+     - Artist
+       - This table contains one record per artist.
+       - Fields:
+         - ArtistId (int): Artist identifier
+         - Name (str): Artist name
+     - Genre
+       - This table contains one record per genre.
+       - Fields:
+         - GenreId (int): Genre identifier
+         - Name (str): Genre name
+     - MediaType
+       - This table contains one record per media type.
+       - Fields:
+         - MediaTypeId (int): Media type identifier
+         - Name (str): Media type name
+     - Customer
+       - This table contains one record per customer.
+       - Fields:
+         - CustomerId (int): Customer identifier
+         - FirstName (str): Customer first name
+         - LastName (str): Customer last name
+         - Company (str): Customer company, if any
+         - Address (str): Customer street address
+         - City (str): Customer city
+         - State (str): Customer state or province
+         - Country (str): Customer country
+         - PostalCode (str): Customer postal code
+         - Phone (str): Customer phone number
+         - Fax (str): Customer fax number
+         - Email (str): Customer email address
+         - SupportRepId (int): EmployeeId of the support representative assigned to the customer
+     - Employee
+       - This table contains one record per employee.
+       - Fields:
+         - EmployeeId (int): Employee identifier
+         - LastName (str): Employee last name
+         - FirstName (str): Employee first name
+         - Title (str): Employee job title
+         - ReportsTo (int): EmployeeId of the employee's manager
+         - BirthDate (str): Employee birth date
+         - HireDate (str): Employee hire date
+         - Address (str): Employee street address
+         - City (str): Employee city
+         - State (str): Employee state or province
+         - Country (str): Employee country
+         - PostalCode (str): Employee postal code
+         - Phone (str): Employee phone number
+         - Fax (str): Employee fax number
+         - Email (str): Employee email address

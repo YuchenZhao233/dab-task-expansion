@@ -1,0 +1,1 @@
+"Across all sold line items, which genre generated the highest total revenue, where a line item's revenue is its unit price multiplied by its quantity? Return the genre name and the total revenue rounded to two decimals."

@@ -1,0 +1,94 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. facts_db
+   - This database is stored in a DuckDB database and contains the high-volume
+     financial activity of a Czech bank: individual account transactions, loans,
+     and standing payment orders. It is the primary source for monetary movements.
+   - This database consists of three tables:
+     - trans
+       - One row per account transaction.
+       - Fields:
+         - trans_id (int): Unique identifier of the transaction
+         - account_id (int): Identifier of the account the transaction belongs to
+         - date (str): Date of the transaction in YYYY-MM-DD format
+         - type (str): Transaction type code (PRIJEM, VYDAJ, VYBER)
+         - operation (str): Mode of the transaction
+         - amount (int): Amount of the transaction
+         - balance (int): Account balance after the transaction
+         - k_symbol (str): Characterization/purpose code of the transaction
+         - bank (str): Two-letter code of the partner bank
+         - account (int): Partner account number
+     - loan
+       - One row per loan granted to an account.
+       - Fields:
+         - loan_id (int): Unique identifier of the loan
+         - account_id (int): Identifier of the account that received the loan
+         - date (str): Date the loan was granted in YYYY-MM-DD format
+         - amount (int): Loan amount
+         - duration (int): Loan duration in months
+         - payments (real): Monthly payment amount
+         - status (str): Single-letter loan status code
+     - trans_order
+       - One row per standing payment order issued from an account.
+       - Fields:
+         - order_id (int): Unique identifier of the order
+         - account_id (int): Identifier of the issuing account
+         - bank_to (str): Two-letter code of the recipient bank
+         - account_to (int): Recipient account number
+         - amount (real): Amount of the payment order
+         - k_symbol (str): Characterization/purpose code of the order
+
+2. context_db
+   - This database is stored in a SQLite database and contains the entities and
+     reference data of the bank: accounts, their dispositions, clients, issued
+     cards, and demographic district information.
+   - This database consists of five tables:
+     - account
+       - One row per bank account.
+       - Fields:
+         - account_id (str): Account identifier
+         - district_id (int): Identifier of the district the account belongs to
+         - frequency (str): Statement-issuance frequency code
+         - date (str): Account creation date in YYYY-MM-DD format
+     - disp
+       - One row per disposition connecting a client to an account.
+       - Fields:
+         - disp_id (int): Unique identifier of the disposition
+         - client_id (int): Identifier of the client
+         - account_id (int): Identifier of the account
+         - type (str): Role of the client on the account (OWNER or DISPONENT)
+     - client
+       - One row per bank client.
+       - Fields:
+         - client_id (int): Unique identifier of the client
+         - gender (str): Gender of the client
+         - birth_date (str): Birth date of the client in YYYY-MM-DD format
+         - district_id (int): Identifier of the client's home district
+     - card
+       - One row per issued credit card.
+       - Fields:
+         - card_id (int): Unique identifier of the card
+         - disp_id (int): Identifier of the disposition the card is issued to
+         - type (str): Card product tier
+         - issued (str): Card issuance date
+     - district
+       - One row per demographic district.
+       - Fields:
+         - district_id (int): Unique identifier of the district
+         - A2 (str): District name
+         - A3 (str): Region name
+         - A4 (str): Number of inhabitants
+         - A5 (str): Number of municipalities with fewer than 499 inhabitants
+         - A6 (str): Number of municipalities with 500-1999 inhabitants
+         - A7 (str): Number of municipalities with 2000-9999 inhabitants
+         - A8 (int): Number of municipalities with 10000+ inhabitants
+         - A9 (int): Number of cities
+         - A10 (real): Ratio of urban inhabitants
+         - A11 (int): Average salary
+         - A12 (real): Unemployment rate 1995
+         - A13 (real): Unemployment rate 1996
+         - A14 (int): Number of entrepreneurs per 1000 inhabitants
+         - A15 (int): Number of committed crimes 1995
+         - A16 (int): Number of committed crimes 1996

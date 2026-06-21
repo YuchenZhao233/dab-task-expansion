@@ -1,0 +1,7 @@
+db_clients:
+  results_db:
+    db_type: duckdb
+    db_path: query_dataset/results.duckdb
+  reference_db:
+    db_type: sqlite
+    db_path: query_dataset/reference.sqlite

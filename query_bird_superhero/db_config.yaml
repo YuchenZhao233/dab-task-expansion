@@ -1,0 +1,8 @@
+db_clients:
+  stats_db:
+    db_type: duckdb
+    db_path: query_dataset/stats.duckdb
+
+  registry_db:
+    db_type: sqlite
+    db_path: query_dataset/registry.db

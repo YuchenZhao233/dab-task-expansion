@@ -1,0 +1,1 @@
+"For accounts that hold a gold-tier card, total the money credited to those accounts, counting only credit transactions dated on or after the account's gold-card issuance date. If an account has more than one gold card, use the earliest gold-card issuance date. Return the total credited amount rounded to two decimals."

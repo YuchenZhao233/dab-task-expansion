@@ -1,0 +1,85 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. orders_db
+   - This database is stored in a DuckDB database and contains the sales transactions of a trading company: customer orders and the individual product line items within each order.
+   - This database consists of two tables:
+     - Orders
+       - This table contains one record per customer order.
+       - Fields:
+         - OrderID (int): Order identifier
+         - CustomerID (str): Identifier of the customer who placed the order
+         - EmployeeID (int): Identifier of the employee (sales representative) who handled the order
+         - OrderDate (str): Date the order was placed
+         - RequiredDate (str): Date the order was required by
+         - ShippedDate (str): Date the order was shipped
+         - ShipVia (int): Identifier of the shipping company used
+         - Freight (float): Freight (shipping) charge for the order
+         - ShipName (str): Recipient name on the shipment
+         - ShipAddress (str): Shipping street address
+         - ShipCity (str): Shipping city
+         - ShipRegion (str): Shipping region
+         - ShipPostalCode (str): Shipping postal code
+         - ShipCountry (str): Shipping country
+     - OrderDetails
+       - This table contains one record per product line item within an order. An order can have several line items.
+       - Fields:
+         - OrderID (int): Order the line item belongs to
+         - ProductID (int): Identifier of the product on the line
+         - UnitPrice (float): Price per unit charged on the line
+         - Quantity (int): Number of units ordered on the line
+         - Discount (float): Fractional discount applied to the line (0 to 1)
+
+2. catalog_db
+   - This database is stored in a SQLite database and contains the reference and context information of the trading company: products and their categories and suppliers, plus the customers, employees, and shipping companies.
+   - This database consists of six tables:
+     - Products
+       - This table contains one record per product.
+       - Fields:
+         - ProductID (int): Product identifier
+         - ProductName (str): Product name
+         - SupplierID (int): Identifier of the supplier of the product
+         - CategoryID (int): Identifier of the product's category
+         - QuantityPerUnit (str): Packaging description
+         - UnitPrice (float): Catalog unit price
+         - UnitsInStock (int): Units currently in stock
+         - UnitsOnOrder (int): Units currently on order
+         - ReorderLevel (int): Stock level at which reordering is triggered
+         - Discontinued (int): Flag, 1 if the product is discontinued
+     - Categories
+       - This table contains one record per product category.
+       - Fields:
+         - CategoryID (int): Category identifier
+         - CategoryName (str): Category name
+         - Description (str): Category description
+     - Suppliers
+       - This table contains one record per supplier.
+       - Fields:
+         - SupplierID (int): Supplier identifier
+         - CompanyName (str): Supplier company name
+         - ContactName (str): Supplier contact name
+         - Country (str): Supplier country
+     - Employees
+       - This table contains one record per employee.
+       - Fields:
+         - EmployeeID (int): Employee identifier
+         - LastName (str): Employee last name
+         - FirstName (str): Employee first name
+         - Title (str): Employee job title
+         - Country (str): Employee country
+         - ReportsTo (int): EmployeeID of this employee's manager (null for the top of the hierarchy)
+     - Shippers
+       - This table contains one record per shipping company.
+       - Fields:
+         - ShipperID (int): Shipping company identifier
+         - CompanyName (str): Shipping company name
+         - Phone (str): Shipping company phone
+     - Customers
+       - This table contains one record per customer.
+       - Fields:
+         - CustomerID (str): Customer identifier
+         - CompanyName (str): Customer company name
+         - ContactName (str): Customer contact name
+         - City (str): Customer city
+         - Country (str): Customer country

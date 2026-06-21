@@ -1,0 +1,31 @@
+HINTS:
+- Account identifiers do not share a single format across the two databases: in
+  context_db the account key carries a non-numeric prefix, while in facts_db the
+  same accounts are referenced by their bare numeric id. Reconcile the formats
+  before matching accounts across databases.
+- Transaction type codes are Czech: PRIJEM means a credit (money in), VYDAJ and
+  VYBER mean withdrawals (money out).
+- Transaction and order purpose codes (k_symbol) are Czech: SIPO denotes a
+  household payment, POJISTNE denotes an insurance payment, UVER a loan payment,
+  DUCHOD a pension, UROK interest, SLUZBY a statement charge.
+- Statement-issuance frequency codes are Czech: POPLATEK MESICNE means monthly,
+  POPLATEK TYDNE means weekly, POPLATEK PO OBRATU means after each transaction.
+- Loan status is a single letter: A means the contract finished with no problems,
+  B means the contract finished but the loan was not paid, C means a running
+  contract so far in order, D means a running contract that is in debt. A loan is
+  considered defaulted when it was not paid or is in debt.
+- A client's role on an account is given by the disposition type: OWNER is the
+  account holder; a single account may also have DISPONENT users.
+- District demographic attributes use coded column names; the region is the
+  region-name attribute, the number of inhabitants is the inhabitants attribute,
+  and the average salary is the average-salary attribute. A region spans several
+  districts, so a region-level inhabitant count is the sum of its districts'
+  inhabitant values; treat any inhabitant value as a number even if stored as text.
+- An account's region or district is the district recorded on the account itself,
+  which is not necessarily the home district recorded on the account's clients.
+- A card's issuance date is the date in its issued field; when an account has more
+  than one card of the same tier, the earliest such issuance date applies.
+- A client's age at a given date is the elapsed time from their birth date to
+  that date; compute it in whole years (for example, using a 365.25-day year).
+- A per-1000-inhabitants metric divides the summed amount by the relevant
+  inhabitant count and multiplies by 1000.

@@ -1,0 +1,90 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. fact_database
+   - This database is stored in a DuckDB database and contains booking facts, customer style preferences, entertainer style strengths, and entertainer membership status records.
+   - This database consists of four tables:
+     - engagement_facts
+       - This table contains one record per booking/engagement.
+       - Fields:
+         - engagement_ref (str): Booking identifier.
+         - start_date (str): Engagement start date in YYYY-MM-DD format.
+         - end_date (str): Engagement end date in YYYY-MM-DD format.
+         - start_time (str): Engagement start time.
+         - stop_time (str): Engagement stop time.
+         - contract_price (float): Contract price for the booking.
+         - customer_ref (str): Customer identifier as stored on the booking fact.
+         - agent_ref (str): Agent identifier as stored on the booking fact.
+         - entertainer_ref (str): Entertainer identifier as stored on the booking fact.
+     - customer_preference_facts
+       - This table contains customer musical style preferences.
+       - Fields:
+         - customer_ref (str): Customer identifier as stored on the preference fact.
+         - style_ref (str): Musical style identifier as stored on the preference fact.
+         - preference_rank (int): Preference order for that customer and style.
+     - entertainer_style_facts
+       - This table contains entertainer musical style rankings.
+       - Fields:
+         - entertainer_ref (str): Entertainer identifier as stored on the style fact.
+         - style_ref (str): Musical style identifier as stored on the style fact.
+         - strength_rank (int): Entertainer style strength rank.
+     - membership_facts
+       - This table contains entertainer-member links and membership status.
+       - Fields:
+         - entertainer_ref (str): Entertainer identifier as stored on the membership fact.
+         - member_ref (str): Member identifier as stored on the membership fact.
+         - status_code (int): Membership status code.
+
+2. context_database
+   - This database is stored in a SQLite database and contains names, roster context, musical style labels, agent information, customer information, entertainer information, and calendar month labels.
+   - This database consists of six tables:
+     - agents
+       - This table contains agent roster and compensation details.
+       - Fields:
+         - agent_key (str): Agent identifier.
+         - first_name (str): Agent first name.
+         - last_name (str): Agent last name.
+         - city (str): Agent city.
+         - state (str): Agent state.
+         - date_hired (str): Hire date in YYYY-MM-DD format.
+         - salary (float): Agent salary.
+         - commission_rate (float): Agent commission rate.
+     - customers
+       - This table contains customer names and locations.
+       - Fields:
+         - customer_key (str): Customer identifier.
+         - first_name (str): Customer first name.
+         - last_name (str): Customer last name.
+         - city (str): Customer city.
+         - state (str): Customer state.
+         - zip_code (str): Customer ZIP code.
+     - entertainers
+       - This table contains entertainer stage names, locations, and contact notes.
+       - Fields:
+         - entertainer_key (str): Entertainer identifier.
+         - stage_name (str): Entertainer stage name.
+         - city (str): Entertainer city.
+         - state (str): Entertainer state.
+         - date_entered (str): Date the entertainer was entered.
+         - contact_note (str): Short text note containing labeled web page and email values.
+     - members
+       - This table contains entertainer member names and gender values.
+       - Fields:
+         - member_key (str): Member identifier.
+         - first_name (str): Member first name.
+         - last_name (str): Member last name.
+         - gender (str): Member gender code.
+     - musical_styles
+       - This table contains musical style names.
+       - Fields:
+         - style_key (str): Musical style identifier.
+         - style_name (str): Musical style name.
+     - calendar_months
+       - This table contains month labels and date ranges.
+       - Fields:
+         - month_label (str): Month display label.
+         - year_number (int): Calendar year.
+         - month_number (int): Calendar month number.
+         - month_start (str): First date of the month in YYYY-MM-DD format.
+         - month_end (str): Last date of the month in YYYY-MM-DD format.

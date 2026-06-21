@@ -34,12 +34,14 @@ The `query_dataset/` directory contains the visible databases used by agents. Qu
 | `query_spider2_airlines` | 7 | DuckDB, SQLite | 5 |
 | `query_spider2_bowling_league` | 6 | DuckDB, PostgreSQL, MongoDB | 7 |
 | `query_spider2_california_traffic` | 8 | DuckDB, SQLite | 3 |
+| `query_spider2_chinook` | 6 | DuckDB, SQLite | 9 |
 | `query_spider2_delivery_center` | 8 | DuckDB, SQLite, PostgreSQL | 8 |
+| `query_spider2_entertainment_agency` | 8 | DuckDB, SQLite | 10 |
 | `query_spider2_imdb_movies` | 8 | PostgreSQL, DuckDB | 5 |
 | `query_spider2_music` | 5 | MongoDB, DuckDB, SQLite | 10 |
 | `query_spider2_stacking` | 10 | PostgreSQL, DuckDB, MongoDB | 6 |
 | `query_wwe` | 8 | DuckDB, SQLite | 8 |
-| **Total** | **88** |  | **82** |
+| **Total** | **102** |  | **101** |
 
 ## What Is Not Included
 

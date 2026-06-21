@@ -1,0 +1,11 @@
+style_name,demand_score,active_supply_score,demand_supply_gap,strongest_style_revenue
+Rhythm and Blues,7,2,5,0
+Show Tunes,5,1,4,4345
+Jazz,8,4,4,5480
+Standards,10,6,4,22630
+40's Ballroom Music,3,0,3,0
+Chamber Music,3,0,3,0
+Modern Rock,3,0,3,0
+Classical,3,0,3,2670
+Contemporary,7,4,3,15070
+Classic Rock & Roll,5,2,3,17150

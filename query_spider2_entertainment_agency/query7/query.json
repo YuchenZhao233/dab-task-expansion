@@ -1,0 +1,1 @@
+"For each agent, consider only bookings of entertainers with at least three active members and only months where that agent had at least two such bookings. What was each agent's best commission month? Return the top five agent-month rows overall with agent name, month label, booking count, revenue, and commission rounded to 2 decimals."

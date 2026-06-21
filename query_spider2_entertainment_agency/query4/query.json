@@ -1,0 +1,1 @@
+"Which entertainers are missing at least one contact channel and have an overnight-booking share above the overall booking average? Count only entertainers with at least one active member. Return stage name, active member count, total booking count, overnight booking count, overnight share rounded to 2 decimals, and overnight revenue."

@@ -1,0 +1,9 @@
+HINTS:
+- Reference strings use different prefixes across the two databases; compare the numeric core after stripping non-digits.
+- In customer_preference_facts, preference_rank 1 is first choice, 2 is second choice, and 3 is third choice.
+- For weighted customer preference scoring, use 3 points for preference_rank 1, 2 points for preference_rank 2, and 1 point for preference_rank 3.
+- In entertainer_style_facts, strength_rank values 1 and 2 are the first and second listed strengths for ordering questions. For strongest-style questions, use the highest strength_rank value for the entertainer.
+- In membership_facts, status_code 1 means active and status_code 2 means inactive/former.
+- An engagement crosses midnight when stop_time is less than or equal to start_time.
+- The entertainers.contact_note text contains labeled Web page and Email values; the value "none" means the contact field is missing.
+- Agent commission for a booking is contract_price multiplied by the agent's commission_rate.

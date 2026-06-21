@@ -1,0 +1,8 @@
+db_clients:
+  fact_database:
+    db_type: duckdb
+    db_path: query_dataset/agency_facts.duckdb
+
+  context_database:
+    db_type: sqlite
+    db_path: query_dataset/agency_context.db

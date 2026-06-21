@@ -1,0 +1,92 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. rentals_db
+   - This database is stored in a DuckDB database and contains the transaction facts of a DVD rental store: each rental of an inventory item and each payment a customer made.
+   - This database consists of two tables:
+     - rental
+       - This table contains one record per rental of an inventory item.
+       - Fields:
+         - rental_id (int): Rental identifier
+         - rental_date (str): Timestamp the item was rented
+         - inventory_id (int): Identifier of the rented inventory item
+         - customer_id (int): Identifier of the renting customer
+         - return_date (str): Timestamp the item was returned
+         - staff_id (int): Identifier of the staff member who handled the rental
+     - payment
+       - This table contains one record per payment made by a customer.
+       - Fields:
+         - payment_id (int): Payment identifier
+         - customer_id (int): Identifier of the paying customer
+         - staff_id (int): Identifier of the staff member who took the payment
+         - rental_id (int): Identifier of the rental the payment is for
+         - amount (float): Payment amount
+         - payment_date (str): Timestamp of the payment
+
+2. catalog_db
+   - This database is stored in a SQLite database and contains the film catalog, inventory, and people context of the rental store.
+   - This database consists of ten tables:
+     - film
+       - One record per film title.
+       - Fields:
+         - film_id (int): Film identifier
+         - title (str): Film title
+         - description (str): Film description
+         - release_year (int): Release year
+         - rental_rate (float): Catalog rental rate charged per rental of the film
+         - length (int): Film length in minutes
+         - rating (str): Content rating
+         - replacement_cost (float): Cost to replace a copy of the film if it is lost
+     - film_category
+       - Maps films to categories (one row per film-category pairing).
+       - Fields:
+         - film_id (int): Film identifier
+         - category_id (int): Category identifier
+     - category
+       - One record per film category.
+       - Fields:
+         - category_id (int): Category identifier
+         - name (str): Category name
+     - inventory
+       - One record per physical inventory item; each item is a copy of a film held at a store.
+       - Fields:
+         - inventory_id (int): Inventory item identifier
+         - film_id (int): Identifier of the film the item is a copy of
+         - store_id (int): Identifier of the store holding the item
+     - film_actor
+       - Maps films to actors (one row per film-actor pairing).
+       - Fields:
+         - actor_id (int): Actor identifier
+         - film_id (int): Film identifier
+     - actor
+       - One record per actor.
+       - Fields:
+         - actor_id (int): Actor identifier
+         - first_name (str): Actor first name
+         - last_name (str): Actor last name
+     - customer
+       - One record per customer.
+       - Fields:
+         - customer_id (int): Customer identifier
+         - store_id (int): Identifier of the customer's home store
+         - first_name (str): Customer first name
+         - last_name (str): Customer last name
+         - address_id (int): Identifier of the customer's address
+         - active (str): Whether the customer is currently active ('1' active, '0' inactive)
+     - address
+       - One record per address.
+       - Fields:
+         - address_id (int): Address identifier
+         - city_id (int): Identifier of the city of the address
+     - city
+       - One record per city.
+       - Fields:
+         - city_id (int): City identifier
+         - city (str): City name
+         - country_id (int): Identifier of the country of the city
+     - country
+       - One record per country.
+       - Fields:
+         - country_id (int): Country identifier
+         - country (str): Country name

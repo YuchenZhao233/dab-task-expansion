@@ -1,0 +1,1 @@
+"Which single product generated the highest total net revenue across all order line items, where a line item's net revenue is its unit price multiplied by its quantity multiplied by (1 minus discount)? Return the product name, the name of its category, and that total net revenue rounded to two decimals."

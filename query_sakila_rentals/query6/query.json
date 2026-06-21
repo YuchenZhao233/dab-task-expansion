@@ -1,0 +1,1 @@
+"Attributing each rental to the store that owns the rented copy (the inventory copy's store, not the customer's home store), how many distinct films were rented from store 1 but never rented from store 2? Return the count."

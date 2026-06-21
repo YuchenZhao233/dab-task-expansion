@@ -1,0 +1,23 @@
+HINTS:
+- The hero reference token in the stats database and the hero identifier in the
+  registry refer to the same heroes, but are written in different formats and
+  must be normalized before they can be matched.
+- power_id and attribute_id in the stats database are codes whose human-readable
+  names live in the registry's lookup tables.
+- A hero's "power index" is defined as the sum of that hero's attribute scores
+  across all of their attributes.
+- A hero is "rated" / has "recorded attribute scores" only if rows exist for that
+  hero in the attribute-score table; a hero with no such rows is unrated, not a
+  zero score. Averages over "every hero" of a group must still count unrated and
+  power-less heroes in the denominator.
+- When a question restricts a group by a minimum count of heroes, apply that
+  support threshold before ranking, and count distinct heroes for the threshold.
+- The race value '-' is a placeholder for unknown race and should not be treated
+  as a real race.
+- The colour value 'No Colour' is a placeholder meaning the colour is unrecorded
+  and should not be treated as a real colour. The eye, hair, and skin colour
+  fields all reference the same colour lookup table; resolve the field the
+  question actually asks about.
+- Gender, alignment, attribute, and publisher names live in their own lookup
+  tables and must be resolved from their id codes before filtering.
+- Resolve ties by the alphabetically smallest name.

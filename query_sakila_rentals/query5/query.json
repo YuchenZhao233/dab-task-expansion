@@ -1,0 +1,1 @@
+"Considering only films whose title contains the substring 'love' (case-insensitive, matching anywhere in the title), what is the total number of rentals across all of those films, counting every individual rental of every copy? Return the total rental count."

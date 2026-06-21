@@ -1,0 +1,1 @@
+"Looking at household payments, which region has the highest total household-payment transaction amount per 1000 inhabitants? Build each region's inhabitant count by adding up the inhabitants of the districts that make up the region. Return the region name and the amount per 1000 inhabitants rounded to two decimals."

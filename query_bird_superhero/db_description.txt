@@ -1,0 +1,80 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. stats_db
+   - This database is stored in a DuckDB database and contains the per-hero
+     measurements of a superhero catalog: which superpowers each hero has, and
+     each hero's numeric attribute scores. It is the large fact/bridge side of
+     the dataset.
+   - This database consists of two tables:
+     - hero_power
+       - This table records that a hero possesses a particular superpower. There
+         is one row per hero-power pair.
+       - Fields:
+         - hero_ref (str): Reference token identifying the hero
+         - power_id (int): Identifier of the superpower the hero possesses
+     - hero_attribute
+       - This table records the numeric score a hero has for a particular
+         attribute. There is one row per hero-attribute pair.
+       - Fields:
+         - hero_ref (str): Reference token identifying the hero
+         - attribute_id (int): Identifier of the attribute being scored
+         - attribute_value (int): Score the hero has for that attribute
+
+2. registry_db
+   - This database is stored in a SQLite database and contains the reference and
+     entity information of the superhero catalog: the heroes themselves and all
+     the lookup tables that give meaning to the codes used elsewhere (powers,
+     attributes, publishers, alignments, genders, races, colours).
+   - This database consists of eight tables:
+     - superhero
+       - One record per superhero, with descriptive and physical attributes.
+       - Fields:
+         - id (int): Hero identifier
+         - superhero_name (str): The hero's code name
+         - full_name (str): The hero's civilian/full name
+         - gender_id (int): Identifier of the hero's gender
+         - eye_colour_id (int): Identifier of the hero's eye colour
+         - hair_colour_id (int): Identifier of the hero's hair colour
+         - skin_colour_id (int): Identifier of the hero's skin colour
+         - race_id (int): Identifier of the hero's race
+         - publisher_id (int): Identifier of the hero's publisher
+         - alignment_id (int): Identifier of the hero's moral alignment
+         - height_cm (int): Hero height in centimetres
+         - weight_kg (int): Hero weight in kilograms
+     - superpower
+       - One record per superpower.
+       - Fields:
+         - id (int): Superpower identifier
+         - power_name (str): Name of the superpower
+     - attribute
+       - One record per measurable attribute.
+       - Fields:
+         - id (int): Attribute identifier
+         - attribute_name (str): Name of the attribute
+     - publisher
+       - One record per publisher/franchise.
+       - Fields:
+         - id (int): Publisher identifier
+         - publisher_name (str): Name of the publisher
+     - alignment
+       - One record per moral alignment.
+       - Fields:
+         - id (int): Alignment identifier
+         - alignment (str): Name of the alignment (e.g. Good, Bad, Neutral)
+     - gender
+       - One record per gender.
+       - Fields:
+         - id (int): Gender identifier
+         - gender (str): Name of the gender
+     - race
+       - One record per race.
+       - Fields:
+         - id (int): Race identifier
+         - race (str): Name of the race
+     - colour
+       - One record per colour, used for eye, hair, and skin colour.
+       - Fields:
+         - id (int): Colour identifier
+         - colour (str): Name of the colour

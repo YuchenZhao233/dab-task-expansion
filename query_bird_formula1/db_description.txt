@@ -1,0 +1,129 @@
+You are working with two databases to solve this query.
+
+Here are the descriptions of these two databases:
+
+1. results_db
+   - This database is stored in a DuckDB database and contains the on-track timing and result facts for Formula 1 races from 1950 onward. It holds per-race finishing results, qualifying sessions, individual lap times, pit stops, and championship standings snapshots after each race.
+   - This database consists of six tables:
+     - results
+       - Final classification of each driver in each race.
+       - Fields:
+         - resultId (int): Unique identifier for the result row
+         - raceId (int): Identifier of the race
+         - driverId (int): Identifier of the driver
+         - constructorId (int): Identifier of the constructor (team)
+         - number (int): Car number
+         - grid (int): Starting grid position
+         - position (int): Finishing position, null if not classified
+         - positionText (str): Finishing position as text; numeric for classified finishers, otherwise codes such as 'R' (retired), 'F', 'D', 'N', 'W'
+         - positionOrder (int): Ordinal used to order finishers
+         - points (float): Championship points awarded under the system in effect that season
+         - laps (int): Number of laps completed
+         - time (str): Total race time or gap to the winner
+         - milliseconds (int): Total race time in milliseconds, null if not applicable
+         - fastestLap (int): Lap number of the driver's fastest lap
+         - rank (int): Rank of the driver's fastest lap among all drivers
+         - fastestLapTime (str): The driver's fastest lap time as a formatted string
+         - fastestLapSpeed (str): Average speed on the fastest lap
+         - statusId (int): Identifier of the finishing status
+     - qualifying
+       - Per-driver qualifying session results for a race.
+       - Fields:
+         - qualifyId (int): Unique identifier for the qualifying row
+         - raceId (int): Identifier of the race
+         - driverId (int): Identifier of the driver
+         - constructorId (int): Identifier of the constructor
+         - number (int): Car number
+         - position (int): Qualifying classification position
+         - q1 (str): Q1 session lap time as a formatted string, may be empty
+         - q2 (str): Q2 session lap time as a formatted string, may be empty
+         - q3 (str): Q3 session lap time as a formatted string, may be empty
+     - lapTimes
+       - One row per driver per completed lap of a race.
+       - Fields:
+         - raceId (int): Identifier of the race
+         - driverId (int): Identifier of the driver
+         - lap (int): Lap number
+         - position (int): Track position at the end of the lap
+         - time (str): Lap time as a formatted string
+     - pitStops
+       - One row per pit stop made by a driver in a race.
+       - Fields:
+         - raceId (int): Identifier of the race
+         - driverId (int): Identifier of the driver
+         - stop (int): Sequence number of this stop for the driver
+         - lap (int): Lap on which the stop was made
+         - time (str): Time of day of the stop
+         - duration (str): Stationary/total pit stop duration as a formatted string
+     - driverStandings
+       - Drivers' championship standings snapshot after each race.
+       - Fields:
+         - driverStandingsId (int): Unique identifier for the standings row
+         - raceId (int): Identifier of the race after which the snapshot is taken
+         - driverId (int): Identifier of the driver
+         - points (float): Cumulative championship points
+         - position (int): Championship position at that point in the season
+         - positionText (str): Championship position as text
+         - wins (int): Cumulative number of wins
+     - constructorStandings
+       - Constructors' championship standings snapshot after each race.
+       - Fields:
+         - constructorStandingsId (int): Unique identifier for the standings row
+         - raceId (int): Identifier of the race after which the snapshot is taken
+         - constructorId (int): Identifier of the constructor
+         - points (float): Cumulative championship points
+         - position (int): Championship position at that point in the season
+         - positionText (str): Championship position as text
+         - wins (int): Cumulative number of wins
+
+2. reference_db
+   - This database is stored in a SQLite database and contains the descriptive reference and entity tables for Formula 1: drivers, constructors, the race calendar, circuits, finishing-status codes, and seasons.
+   - This database consists of six tables:
+     - drivers
+       - Biographical information about each driver.
+       - Fields:
+         - driverId (int): Unique identifier for the driver
+         - driverRef (str): Short reference string for the driver
+         - number (int): Permanent car number, may be null
+         - code (str): Three-letter driver code, may be null
+         - forename (str): Driver first name
+         - surname (str): Driver last name
+         - dob (str): Date of birth in the format YYYY-MM-DD
+         - nationality (str): Driver nationality
+     - constructors
+       - Information about each constructor (team).
+       - Fields:
+         - constructorId (int): Unique identifier for the constructor
+         - constructorRef (str): Short reference string for the constructor
+         - name (str): Full constructor name
+         - nationality (str): Constructor nationality
+     - races
+       - The race calendar across seasons.
+       - Fields:
+         - raceId (int): Unique identifier for the race
+         - year (int): Season year
+         - round (int): Round number within the season
+         - circuitId (int): Identifier of the circuit
+         - name (str): Race name, e.g. 'Australian Grand Prix'
+         - date (str): Race date in the format YYYY-MM-DD
+         - time (str): Scheduled start time, may be empty
+     - circuits
+       - Information about each circuit.
+       - Fields:
+         - circuitId (int): Unique identifier for the circuit
+         - circuitRef (str): Short reference string for the circuit
+         - name (str): Full circuit name
+         - location (str): City or locality of the circuit
+         - country (str): Country of the circuit
+         - lat (float): Latitude
+         - lng (float): Longitude
+         - alt (int): Altitude in meters, may be null
+     - status
+       - Lookup of finishing-status codes and their text descriptions.
+       - Fields:
+         - statusId (int): Unique identifier for the status
+         - status (str): Human-readable status text, e.g. 'Finished', 'Accident', 'Engine', '+1 Lap'
+     - seasons
+       - List of seasons.
+       - Fields:
+         - year (int): Season year

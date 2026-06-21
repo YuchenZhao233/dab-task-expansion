@@ -1,0 +1,1 @@
+"A hero's power index is the sum of that hero's attribute scores. Which superhero has the highest power index? Return the hero's code name and that power index. If several heroes tie for the highest power index, return the alphabetically smallest code name."

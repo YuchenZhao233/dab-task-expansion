@@ -1,0 +1,7 @@
+HINTS:
+- A line item's net revenue is UnitPrice multiplied by Quantity multiplied by (1 - Discount) in OrderDetails. Its gross value is UnitPrice multiplied by Quantity, and the discount amount it grants equals gross minus net.
+- A product's category and supplier are reached through Products.CategoryID and Products.SupplierID; whether a product is discontinued is the Products.Discontinued flag (1 = discontinued, 0 = active).
+- The employee who handled an order is the Employee whose EmployeeID equals Orders.EmployeeID. Employees form a management hierarchy through Employees.ReportsTo (the EmployeeID of that employee's manager); an employee's reporting chain includes both direct and indirect reports found by following ReportsTo transitively.
+- The shipping company for an order is the Shipper whose ShipperID equals Orders.ShipVia.
+- A customer's home country is Customers.Country (joined to Orders by CustomerID); this is distinct from the per-order shipping destination Orders.ShipCountry.
+- Date fields (OrderDate, RequiredDate, ShippedDate) are stored as ISO-8601 text; some values are date-only ('YYYY-MM-DD') and some include a time component ('YYYY-MM-DD HH:MM:SS'), but lexical (string) comparison of these ISO values orders them chronologically. An order's calendar year is the year in its OrderDate. ShippedDate is null for orders that were never shipped.

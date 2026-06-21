@@ -1,0 +1,1 @@
+"Among heroes who can fly (heroes possessing the Flight superpower), which eye colour is the most common? Ignore heroes whose eye colour is recorded as having no colour. Return the eye colour name and the number of flying heroes with that eye colour. If two colours tie, return the alphabetically smallest colour name."

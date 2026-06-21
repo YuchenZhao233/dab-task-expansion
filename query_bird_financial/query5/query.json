@@ -1,0 +1,1 @@
+"Group accounts by their statement-issuance frequency. For each frequency, the loan-uptake rate is the share of that frequency's accounts that have taken out at least one loan. Which frequency has the highest loan-uptake rate? Return the frequency code and that rate as a percentage rounded to two decimals."

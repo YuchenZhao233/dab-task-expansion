@@ -1,0 +1,1 @@
+"Compute each region's loan default rate (loans that were not paid or are in debt, divided by all that region's loans) among regions with at least 20 loans. Take the median of those regional default rates, keep the regions whose rate is strictly above that median, and count the distinct accounts in those regions that hold a gold-tier card. Return the count."

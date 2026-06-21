@@ -1,0 +1,9 @@
+HINTS:
+- A rental always concerns one physical film copy held in inventory, so a rental can be traced back to its film, and to that copy's store, through the inventory copy.
+- Films are organized into categories through the film-category association, and a film's cast is recorded in the film-actor association.
+- A customer's country is determined by the location recorded on the customer's address.
+- A rental whose return_date is empty/unrecorded is one whose copy is still out (not yet returned).
+- A payment's amount is the cash actually collected and may exceed the film's catalog rental_rate because it can include late fees; the catalog rental_rate is the per-rental list price.
+- The store responsible for a rental is the store that owns the rented inventory copy (inventory.store_id), which may differ from the customer's home store.
+- The customer "active" flag is stored as a string, '1' for active and '0' for inactive.
+- A substring match on a title means the text appears anywhere within the title, compared case-insensitively.
